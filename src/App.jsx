@@ -1,19 +1,18 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
 
-// ==================== CONTEXTLAR ====================
+
 const ThemeContext = createContext();
 const AuthContext = createContext();
-const CartContext = createContext();
-
-// ==================== ASOSIY APP ====================
+const CartContext = createCont
 function PhoneMarketApp() {
+
   const [currentPage, setCurrentPage] = useState('home');
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [user, setUser] = useState(null);
   const [cartItems, setCartItems] = useState([]);
   const [showLogin, setShowLogin] = useState(false);
 
-  // Dark Mode Effect
+
   useEffect(() => {
     if (isDarkMode) {
       document.body.style.backgroundColor = '#0f172a';
@@ -24,7 +23,7 @@ function PhoneMarketApp() {
     }
   }, [isDarkMode]);
 
-  // Auth Functions
+
   const login = (email, password) => {
     setUser({ id: 1, name: 'Foydalanuvchi', email });
     setShowLogin(false);
@@ -34,7 +33,7 @@ function PhoneMarketApp() {
     setUser(null);
   };
 
-  // Cart Functions
+  
   const addToCart = (product) => {
     setCartItems(prev => {
       const existing = prev.find(item => item.id === product.id);
@@ -61,17 +60,17 @@ function PhoneMarketApp() {
       <AuthContext.Provider value={{ user, login, logout }}>
         <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, cartCount, cartTotal }}>
           <div style={{ minHeight: '100vh', fontFamily: 'Arial, sans-serif' }}>
-            {/* HEADER */}
+            {/* H */}
             <Header 
               onLoginClick={() => setShowLogin(true)}
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
             />
 
-            {/* LOGIN MODAL */}
+        
             {showLogin && <LoginModal onClose={() => setShowLogin(false)} onLogin={login} />}
 
-            {/* MAIN CONTENT */}
+      
             <div style={{ padding: '20px', maxWidth: '1400px', margin: '0 auto' }}>
               {currentPage === 'home' && <HomePage />}
               {currentPage === 'products' && <ProductsPage />}
@@ -88,7 +87,7 @@ function PhoneMarketApp() {
   );
 }
 
-// ==================== HEADER KOMPONENTI ====================
+
 function Header({ onLoginClick, currentPage, setCurrentPage }) {
   const { isDarkMode, toggleTheme } = useContext(ThemeContext);
   const { user, logout } = useContext(AuthContext);
@@ -121,7 +120,7 @@ function Header({ onLoginClick, currentPage, setCurrentPage }) {
         maxWidth: '1400px',
         margin: '0 auto'
       }}>
-        {/* LOGO */}
+      
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <div style={{
             background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -137,9 +136,9 @@ function Header({ onLoginClick, currentPage, setCurrentPage }) {
           </div>
         </div>
 
-        {/* DESKTOP NAVIGATION */}
+       
         <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-          {/* SEARCH */}
+      
           <div style={{ position: 'relative' }}>
             <input
               type="text"
@@ -164,7 +163,7 @@ function Header({ onLoginClick, currentPage, setCurrentPage }) {
             }}>🔍</span>
           </div>
 
-          {/* NAV MENU */}
+         
           <nav style={{ display: 'flex', gap: '15px' }}>
             {menuItems.map(item => (
               <button
@@ -190,7 +189,7 @@ function Header({ onLoginClick, currentPage, setCurrentPage }) {
             ))}
           </nav>
 
-          {/* THEME TOGGLE */}
+
           <button
             onClick={toggleTheme}
             style={{
@@ -206,7 +205,7 @@ function Header({ onLoginClick, currentPage, setCurrentPage }) {
             {isDarkMode ? '☀️' : '🌙'}
           </button>
 
-          {/* USER MENU */}
+      
           {user ? (
             <div style={{ position: 'relative' }}>
               <button
@@ -300,7 +299,7 @@ function Header({ onLoginClick, currentPage, setCurrentPage }) {
             </button>
           )}
 
-          {/* MOBILE MENU BUTTON */}
+        
           <button
             onClick={() => setShowMobileMenu(!showMobileMenu)}
             style={{
@@ -319,7 +318,7 @@ function Header({ onLoginClick, currentPage, setCurrentPage }) {
         </div>
       </div>
 
-      {/* MOBILE MENU */}
+      
       {showMobileMenu && (
         <div style={{
           marginTop: '15px',
@@ -359,7 +358,7 @@ function Header({ onLoginClick, currentPage, setCurrentPage }) {
   );
 }
 
-// ==================== LOGIN MODAL ====================
+
 function LoginModal({ onClose, onLogin }) {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
@@ -501,7 +500,7 @@ function LoginModal({ onClose, onLogin }) {
   );
 }
 
-// ==================== HOMEPAGE ====================
+
 function HomePage() {
   const { isDarkMode } = useContext(ThemeContext);
   const { addToCart } = useContext(CartContext);
@@ -515,7 +514,7 @@ function HomePage() {
 
   return (
     <div>
-      {/* HERO SECTION */}
+     
       <div style={{
         background: isDarkMode 
           ? 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'
@@ -544,7 +543,7 @@ function HomePage() {
         </button>
       </div>
 
-      {/* FEATURED PRODUCTS */}
+
       <h2 style={{ fontSize: '32px', marginBottom: '30px' }}>Tavsiya etilganlar</h2>
       <div style={{
         display: 'grid',
@@ -557,7 +556,7 @@ function HomePage() {
         ))}
       </div>
 
-      {/* FEATURES */}
+
       <div style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
@@ -599,7 +598,7 @@ function HomePage() {
   );
 }
 
-// ==================== PRODUCT CARD ====================
+
 function ProductCard({ product, onAddToCart }) {
   const { isDarkMode } = useContext(ThemeContext);
   const [isHovered, setIsHovered] = useState(false);
@@ -623,7 +622,7 @@ function ProductCard({ product, onAddToCart }) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* DISCOUNT BADGE */}
+  
       {product.discount > 0 && (
         <div style={{
           position: 'absolute',
@@ -640,7 +639,7 @@ function ProductCard({ product, onAddToCart }) {
         </div>
       )}
 
-      {/* PRODUCT IMAGE */}
+
       <div style={{
         height: '200px',
         display: 'flex',
@@ -652,7 +651,7 @@ function ProductCard({ product, onAddToCart }) {
         {product.image}
       </div>
 
-      {/* PRODUCT INFO */}
+
       <div style={{ marginBottom: '20px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
           <span style={{
@@ -712,7 +711,7 @@ function ProductCard({ product, onAddToCart }) {
   );
 }
 
-// ==================== PRODUCTS PAGE ====================
+
 function ProductsPage() {
   const { isDarkMode } = useContext(ThemeContext);
   const { addToCart } = useContext(CartContext);
@@ -738,7 +737,7 @@ function ProductsPage() {
 
   return (
     <div>
-      {/* FILTERS */}
+    
       <div style={{
         background: isDarkMode ? '#1e293b' : '#f8fafc',
         padding: '20px',
@@ -795,7 +794,7 @@ function ProductsPage() {
         </div>
       </div>
 
-      {/* PRODUCTS GRID */}
+
       <div style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
@@ -809,7 +808,7 @@ function ProductsPage() {
   );
 }
 
-// ==================== CART PAGE ====================
+
 function CartPage() {
   const { isDarkMode } = useContext(ThemeContext);
   const { cartItems, removeFromCart, cartTotal } = useContext(CartContext);
@@ -844,7 +843,7 @@ function CartPage() {
       <h1 style={{ fontSize: '32px', marginBottom: '30px' }}>Savatcha ({cartItems.length} mahsulot)</h1>
       
       <div style={{ display: 'flex', gap: '30px', flexWrap: 'wrap' }}>
-        {/* CART ITEMS */}
+    
         <div style={{ flex: 3, minWidth: '300px' }}>
           {cartItems.map(item => (
             <div key={item.id} style={{
@@ -929,7 +928,7 @@ function CartPage() {
           ))}
         </div>
 
-        {/* ORDER SUMMARY */}
+       
         <div style={{ flex: 1, minWidth: '300px' }}>
           <div style={{
             background: isDarkMode ? '#1e293b' : 'white',
@@ -1028,7 +1027,7 @@ function CartPage() {
   );
 }
 
-// ==================== PROFILE PAGE ====================
+
 function ProfilePage() {
   const { user } = useContext(AuthContext);
   const { isDarkMode } = useContext(ThemeContext);
@@ -1082,7 +1081,7 @@ function ProfilePage() {
         gap: '20px',
         marginTop: '30px'
       }}>
-        {/* ORDERS */}
+       
         <div style={{
           background: isDarkMode ? '#1e293b' : 'white',
           padding: '25px',
@@ -1099,7 +1098,7 @@ function ProfilePage() {
           </div>
         </div>
 
-        {/* SETTINGS */}
+    
         <div style={{
           background: isDarkMode ? '#1e293b' : 'white',
           padding: '25px',
@@ -1153,7 +1152,7 @@ function ProfilePage() {
           </div>
         </div>
 
-        {/* STATISTICS */}
+       
         <div style={{
           background: isDarkMode ? '#1e293b' : 'white',
           padding: '25px',
@@ -1180,7 +1179,7 @@ function ProfilePage() {
   );
 }
 
-// ==================== FOOTER ====================
+
 function Footer() {
   const { isDarkMode } = useContext(ThemeContext);
 
@@ -1240,10 +1239,10 @@ function Footer() {
           <h3 style={{ fontSize: '20px', marginBottom: '20px' }}>Aloqa</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             <p style={{ margin: 0, opacity: 0.8, display: 'flex', alignItems: 'center', gap: '8px' }}>
-              📍 Toshkent shahar, Yunusobod tumani
+              📍 khva shahar, najmiddin kubro kochasi
             </p>
             <p style={{ margin: 0, opacity: 0.8, display: 'flex', alignItems: 'center', gap: '8px' }}>
-              📞 +998 90 123 45 67
+              📞 +998 90 990 09 90
             </p>
             <p style={{ margin: 0, opacity: 0.8, display: 'flex', alignItems: 'center', gap: '8px' }}>
               ✉️ info@phonemarket.uz
@@ -1311,5 +1310,5 @@ function Footer() {
   );
 }
 
-// ==================== RENDER APP ====================
+
 export default PhoneMarketApp;
